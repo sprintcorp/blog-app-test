@@ -1,0 +1,64 @@
+version: '3.8'
+services:
+  main:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    command: 'php artisan serve --host=0.0.0.0'
+    container_name: 'blog_app_test'
+    volumes:
+      - .:/app
+    networks:
+      - blog_test
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+  job:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    command: 'php artisan schedule:run'
+    depends_on:
+      - db
+
+  db:
+    platform: linux/x86_64
+    image: mysql:8.0
+    environment:
+#      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+#      MYSQL_USER: '${DB_USERNAME}'
+#      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./database/dbdata:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8085:80
+
+  migration:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    command: 'php artisan migrate'
+    depends_on:
+      - db
+
+networks:
+  blog_test:
+volumes:
+  db_data:
