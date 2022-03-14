@@ -17,7 +17,7 @@ class CommentRepository implements CommentInterface
     public function createComment($data)
     {
         $comment = Comment::create($data);
-        return $this->showOne(new CommentResource($comment));
+        return $this->showOne(new CommentResource($comment),201);
     }
 
     public function readComments()
