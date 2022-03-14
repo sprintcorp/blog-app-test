@@ -1,64 +1,213 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Project Overview
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This solution is build using laravel 9. The application allows AUthors to create, update, read, delete and upvote post. It also provide users with CRUD functionality for post comment.
 
-## About Laravel
+## Implementation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A model for Post and Comment was created to help establish relationship between this entities. The Post has a `One-To-Many` relationship with the Comment because a post can have many comments made to it.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Documentation link
+Postman documentation link `https://documenter.getpostman.com/view/7305732/UVsJx7Xi`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Project setup
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Clone the project from repository using the `https://github.com/sprintcorp/blog-app-test.git` into a directory on your pc
+- Move to project directory `blog-app-test` 
+- Run `composer install` to install all packages.
+- When the above step has been done you the proceed to create database, the database use during development is mysql database and Eloquent ORM is used to interact with the database,
+- Create a .env file the copy .env.example to create enviroment variable for this application which houses simple configuration text file that is used to define some variables passed into the application's environment,
+- Generate app key which is needed for the application to function properly used for all encrypted data, like sessions,Password, remember token using `php artisan key:generate`.
+- Run `php artisan migrate` which creates table in the database specified application .env file.
+- Run `php artisan db:seed` to seed data into the database
+- Run using `php artisan serve` which starts the application using laravel default port 8000 to run it on the system locally.
+- To run on docker use `docker-compose up`
+- Run `php artisan test` to run unit test of the application
+## Usage
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Get all post `localhost:8000/api/post` method `GET` 
+#### Response
 
-## Laravel Sponsors
+    {
+    "current_page": 1,
+    "data": [
+        {
+            "post_title": "Post one update",
+            "post_link": "https://develops.notion.site/PHP-test-assessment-by-DevelopsToday-113d24c027aa459196647f654d0e00c2",
+            "post_total_upvote": 0,
+            "post_author": "Frederick",
+            "total_comments": 0
+        },
+        {
+            "post_title": "Post two",
+            "post_link": "http://127.0.0.1:8000/api/post",
+            "post_total_upvote": 0,
+            "post_author": "Fred",
+            "total_comments": 1
+        }
+    ],
+    "first_page_url": "http://127.0.0.1:8000/api/post?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http://127.0.0.1:8000/api/post?page=1",
+    "links": [
+        {
+            "url": null,
+            "label": "&laquo; Previous",
+            "active": false
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/post?page=1",
+            "label": "1",
+            "active": true
+        },
+        {
+            "url": null,
+            "label": "Next &raquo;",
+            "active": false
+        }
+    ],
+    "next_page_url": null,
+    "path": "http://127.0.0.1:8000/api/post",
+    "per_page": 30,
+    "prev_page_url": null,
+    "to": 2,
+    "total": 2
+}
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+- Create post `localhost:8000/api/post` method `POST`
+##### Data
+    {
+        "title":"Post title one",
+        "link":"https://develops.notion.site",
+        "author_name":"Fred"
+    }
+#### Response
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    {
+        "post_title": "Post title one",
+        "post_link": "https://develops.notion.site",
+        "post_total_upvote": null,
+        "post_author": "Fred",
+        "total_comments": 0
+    }
+    
+    
+- Update post `localhost:8000/api/post/{id}` method `PUT` where id is post id
 
-## Contributing
+##### Data
+    {
+        "title":"Post title one update",
+        "link":"https://develops.notion.site",
+        "author_name":"Fred"
+    }
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Response
 
-## Code of Conduct
+    {
+    "post_title": "Post title one update",
+    "post_link": "https://develops.notion.site",
+    "post_total_upvote": 0,
+    "post_author": "Fred",
+    "total_comments": 0
+}
+    
+    
+ - Delete post `localhost:8000/api/post/{id}` method `DELETE` where `id` is post id 
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Data
+    {
+        "data": "Post deleted successfully"
+    }
 
-## Security Vulnerabilities
+- Upvote post `locathost:8000/api/post-upvote/{id}` method `PUT` where `id` is post id
+#### Response
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    {
+        "data": "Post upvoted successfully"
+    }
+    
+- Create post comment `localhost:8000/api/comment` method `POST`
+        
+ #### Data
+    {
+        "post_id":2,
+        "content":"Hello, great article",
+        "author_name":"Fred"
+    }
+ #### Response
 
-## License
+    {
+        "post_title": "Post two",
+        "comment_author": "Fred",
+        "comment": "Hello, great article"
+    }
+    
+    
+- Update post comment `localhost:8000/api/comment/{id}` method `PUT` where id is comment id
+        
+ #### Data
+    {
+        "post_id":2,
+        "content":"Hello, great article, love it",
+        "author_name":"Fred"
+    }
+ #### Response
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    {
+        "post_title": "Post two",
+        "comment_author": "Fred",
+        "comment": "Hello, great article, love it"
+    }
+    
+ - Get post comment `localhost:8000/api/comment?post_id=2` method `GET` where post_id is post id
+        
+
+ #### Response
+
+    {
+        "current_page": 1,
+        "data": [
+            {
+                "post_title": "Post two",
+                "comment_author": "Yemi",
+                "comment": "Hi"
+            }
+        ],
+        "first_page_url": "http://127.0.0.1:8000/api/comment?page=1",
+        "from": 1,
+        "last_page": 1,
+        "last_page_url": "http://127.0.0.1:8000/api/comment?page=1",
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http://127.0.0.1:8000/api/comment?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "next_page_url": null,
+        "path": "http://127.0.0.1:8000/api/comment",
+        "per_page": 30,
+        "prev_page_url": null,
+        "to": 1,
+        "total": 1
+    }
+
+
+- Delete comment `localhost:8000/api/comment/{id}` method `DELETE` where `id` is comment id 
+
+#### Data
+    {
+        "data": "Comment deleted successfully"
+    }
