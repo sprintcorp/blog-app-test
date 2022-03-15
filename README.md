@@ -23,7 +23,8 @@ Heroku link `https://blog-app-test-doc.herokuapp.com`
 - Generate app key which is needed for the application to function properly used for all encrypted data, like sessions,Password, remember token using `php artisan key:generate`.
 - Run `php artisan migrate` which creates table in the database specified application .env file.
 - Run `php artisan db:seed` to seed data into the database
-- Run using `php artisan serve` which starts the application using laravel default port 8000 to run it on the system locally.
+- Run `php artisan serve` to starts the application using laravel default port 8000 to run it on the system locally.
+- Run `php artisan schedule:run` to run scheduler which helps reset upvotes .
 - To run on docker use `docker-compose up`
 - Run `php artisan test` to run unit test of the application
 ## Usage
