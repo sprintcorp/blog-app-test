@@ -1,16 +1,12 @@
-#!/bin/bash
+#!/bin/sh
+php -v
 
-# wait for mysql
-while ! phpmyadmin ping -h"mysql" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" --silent; do
-  sleep 1
-done
+# php artisan
+sleep 6
 
-# run artisan scripts
-pushd /var/www
-  composer update --no-plugins --no-scripts
-  php artisan migrate
-  php artisan db:seed
-popd
-
-# start workspace process
-/sbin/my_init
+#php artisan passport:install
+php artisan config:clear
+php artisan config:cache
+php artisan cache:clear
+#php artisan migrate
+php artisan serve --host=0.0.0.0 --port=8002
