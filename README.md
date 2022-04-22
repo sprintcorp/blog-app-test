@@ -9,8 +9,6 @@ A model for Post and Comment was created to help establish relationship between 
 ## Documentation link
 Postman documentation link `https://documenter.getpostman.com/view/7305732/UVsJx7Xi`
 
-## Live URL
-Heroku link `https://blog-app-test-doc.herokuapp.com`
 
 ## Project setup
 
